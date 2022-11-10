@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CoffeesModule } from './coffees/coffees.module';
+import { PubSubModule } from './pub-sub/pub-sub.module';
 
 @Module({
   imports: [
@@ -25,8 +26,10 @@ import { CoffeesModule } from './coffees/coffees.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver, // 👈 Using the ApolloDriver
       typePaths: ['./**/*.graphql'], // 👈 where our (.)graphql files are located
+      installSubscriptionHandlers: true,
     }),
     CoffeesModule,
+    PubSubModule,
   ],
   controllers: [AppController],
   providers: [AppService],

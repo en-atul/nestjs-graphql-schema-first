@@ -6,12 +6,14 @@ import { Coffee } from './entities/coffee.entity';
 import * as GraphQLTypes from '../graphql-types';
 import { UpdateCoffeeInput } from './dto/update-coffee.input';
 import { CreateCoffeeInput } from './dto/create-coffee.input';
+import { PubSub } from 'graphql-subscriptions';
 
 @Injectable()
 export class CoffeesService {
   constructor(
     @InjectModel(Coffee.name)
     private coffeeModel: Model<Coffee>,
+    private readonly pubSub: PubSub,
   ) {}
   async findAll(): Promise<Coffee[]> {
     return this.coffeeModel.find().exec();
@@ -25,6 +27,7 @@ export class CoffeesService {
 
   async create(createCoffeeInput: CreateCoffeeInput): Promise<Coffee> {
     const coffee = this.coffeeModel.create(createCoffeeInput);
+    this.pubSub.publish('coffeeAdded', { coffeeAdded: coffee });
     return (await coffee).save();
   }
 

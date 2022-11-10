@@ -10,7 +10,9 @@ type Coffee {
   flavors: [String!]!
 }
 
-
+type Subscription {
+  coffeeAdded: Coffee!
+}
 
 """
 Create coffee input object type.

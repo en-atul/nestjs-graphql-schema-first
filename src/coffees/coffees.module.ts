@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { PubSubModule } from 'src/pub-sub/pub-sub.module';
 import { CoffeesResolver } from './coffees.resolver';
 import { CoffeesService } from './coffees.service';
 import { Coffee, CoffeeSchema } from './entities/coffee.entity';
@@ -12,6 +13,7 @@ import { Coffee, CoffeeSchema } from './entities/coffee.entity';
         schema: CoffeeSchema,
       },
     ]),
+    PubSubModule
   ],
   providers: [CoffeesResolver, CoffeesService],
 })
